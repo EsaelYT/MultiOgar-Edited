@@ -13,7 +13,7 @@ function GameServer() {
 
     // Startup
     this.run = true;
-    this.version = '1.6.1';
+    this.version = 'Welcome to Zagar';
     this.httpServer = null;
     this.lastNodeId = 1;
     this.lastPlayerId = 1;
@@ -66,7 +66,7 @@ function GameServer() {
         serverStatsPort: 88, // Port for stats server. Having a negative number will disable the stats server.
         serverStatsUpdate: 60, // Update interval of server stats in seconds
         mobilePhysics: 0, // Whether or not the server uses mobile agar.io physics
-        badWordFilter: 1, // Toggle whether you want the bad word filter on (0 to disable, 1 to enable) 
+        badWordFilter: 1, // Toggle whether you want the bad word filter on (0 to disable, 1 to enable)
         serverRestart: 0, // Toggle whether you want your server to auto restart in minutes. (0 to disable)
 
         /** CLIENT **/
@@ -75,7 +75,7 @@ function GameServer() {
         serverChatAscii: 1, // Set to 1 to disable non-ANSI letters in the chat (english only)
         separateChatForTeams: 0, // Set to 1 to separate chat for game modes with teams like 'Teams'
         serverName: 'MultiOgar-Edited #1', // Server name
-        serverWelcome1: 'Welcome to MultiOgar-Edited!', // First server welcome message
+        serverWelcome1: '', // First server welcome message
         serverWelcome2: '', // Second server welcome message (optional, for info, etc)
         clientBind: '', // Only allow connections to the server from specified client (eg: http://agar.io - http://mywebsite.com - http://more.com) [Use ' - ' to seperate different websites]
 
@@ -543,7 +543,7 @@ GameServer.prototype.sendChatMessage = function (from, to, message) {
         if (!to || to == this.clients[i].playerTracker) {
             var Packet = require('./packet');
             if (this.config.separateChatForTeams && this.gameMode.haveTeams) {
-                //  from equals null if message from server 
+                //  from equals null if message from server
                 if (from == null || from.team === this.clients[i].playerTracker.team) {
                     this.clients[i].packetHandler.sendPacket(new Packet.ChatMessage(from, message));
                 }
@@ -584,21 +584,21 @@ GameServer.prototype.mainLoop = function () {
         this.run = true;
         this.lastNodeId = 1;
         this.lastPlayerId = 1;
+        for (var i = 0; i < this.clients.length; i++) {
+            var client = this.clients[i];
+            client.close();
+        };
+        this.nodes = [];
+        this.nodesVirus = [];
+        this.nodesFood = [];
+        this.nodesEjected = [];
+        this.nodesPlayer = [];
+        this.movingNodes = [];
         if (this.config.serverBots) {
             for (var i = 0; i < this.config.serverBots; i++)
                 this.bots.addBot();
             Logger.info("Added " + this.config.serverBots + " player bots");
         };
-        for (var i = 0; i < this.clients.length; i++) {
-            var client = this.clients[i];
-            client.close();
-        };
-        this.nodes = []; 
-        this.nodesVirus = [];
-        this.nodesFood = []; 
-        this.nodesEjected = [];
-        this.nodesPlayer = [];
-        this.movingNodes = [];
         this.commands;
         this.tickCounter = 0;
         this.startTime = Date.now();
