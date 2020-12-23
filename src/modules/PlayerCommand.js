@@ -82,6 +82,7 @@ var playerCommands = {
             this.writeLine("/kill - self kill");
             this.writeLine("/help - this command list");
             this.writeLine("/id - Gets your playerID");
+            this.writeLine("/status - Show Status of the Server");
             this.writeLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         }
     },
@@ -226,7 +227,7 @@ var playerCommands = {
                 // Add minions for self
                 if (isNaN(parseInt(add))) add = 1;
                 for (var i = 0; i < add; i++) {
-                    this.gameServer.bots.addMinion(player);
+                    this.gameServer.bots.addMinion(player,  player._name);
                 }
                 this.writeLine("Added " + add + " minions for " + player._name);
             }
@@ -256,7 +257,7 @@ var playerCommands = {
                         // Add minions for client
                         if (isNaN(add)) add = 1;
                         for (var i = 0; i < add; i++) {
-                            this.gameServer.bots.addMinion(client);
+                            this.gameServer.bots.addMinion(client,  client._name);
                         }
                         this.writeLine("Added " + add + " minions for " + client._name);
                         var text = this.playerTracker._name + " gave you " + add + " minions.";
@@ -279,7 +280,7 @@ var playerCommands = {
         this.writeLine("Added " + add + " Bots");
     },
     status: function (args) {
-        if (this.playerTracker.userRole != UserRoleEnum.ADMIN && this.playerTracker.userRole != UserRoleEnum.MODER) {
+        if (this.playerTracker.userRole != UserRoleEnum.ADMIN && this.playerTracker.userRole != UserRoleEnum.MODER && this.playerTracker.userRole != UserRoleEnum.GUEST) {
             this.writeLine("ERROR: access denied!");
             return;
         }
