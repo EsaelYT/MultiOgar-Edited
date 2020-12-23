@@ -1,5 +1,5 @@
 // Libraries
-
+var figlet = require('figlet');
 
 // Imports
 var GameMode = require('../gamemodes');
