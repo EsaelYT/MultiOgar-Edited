@@ -1,6 +1,6 @@
 [
     { 
-        "ip":"127.0.0.1", 
+        "ip":"", 
         "password":"Esael29",
         "role":"ADMIN",
         "name":"Local Administrator" 
