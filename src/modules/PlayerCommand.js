@@ -105,7 +105,7 @@ var playerCommands = {
             this.writeLine("Your skin set to " + skinName);
     },
     kill: function (args) {
-        if (this.playerTracker.userRole == UserRoleEnum.ADMIN) {
+        if (this.playerTracker.userRole !== UserRoleEnum.ADMIN) {
             this.writeLine("You cannot kill yourself, because you're still not joined to the game!");
             return;
         }
